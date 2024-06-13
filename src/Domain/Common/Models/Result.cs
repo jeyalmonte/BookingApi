@@ -9,6 +9,7 @@ public readonly record struct Result<TValue> : IResult<TValue>
 		IsError = isError;
 	}
 
+
 	public static implicit operator Result<TValue>(TValue value)
 	{
 		return new Result<TValue>(value: value, isError: false);
@@ -46,7 +47,6 @@ public readonly record struct Result<TValue> : IResult<TValue>
 
 	private readonly List<Error>? _errors;
 	private readonly TValue? _value;
-
 
 	public TResult Match<TResult>(Func<TValue, TResult> onValue, Func<List<Error>, TResult> onError)
 	{
