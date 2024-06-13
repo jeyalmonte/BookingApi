@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+
+  postgres:
+    container_name: postgres_container
+    image: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-pass12345}
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - booking
+    restart: unless-stopped
+    
+  rabbitmq:
+    container_name: rabbitmq_container
+    image: rabbitmq:management
+    ports:
+      - "5672:5672" 
+      - "15672:15672" 
+    networks:
+      - booking
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER:-guest}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS:-guest}
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq
+
+  api:
+    container_name: api_container
+    image: booking-api
+    build:
+      context: .
+    ports:
+      - 5000:8080
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=postgres;Port=5432;Userid=postgres;Password=pass12345;SSLMode=Disable;Database=bookingdb
+      - TZ=America/Santo_Domingo
+    networks:
+      - booking
+    depends_on:
+      - postgres
+
+networks:
+  booking:
+    driver: bridge
+
+volumes:
+  postgres:
+  rabbitmq:
+
+    
