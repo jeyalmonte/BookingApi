@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='UTF-8'>
+    <title>Confirmación Reserva</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .1)
+        }
+
+        h1 {
+            color: #333;
+            margin-top: 0;
+            text-align: center
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse
+        }
+
+        td,
+        th {
+            padding: 10px;
+            border-bottom: 1px solid #ccc
+        }
+
+        th {
+            text-align: left
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #888888;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class='container'>
+        <h1>Confirmación Reserva</h1>
+        <p>Hola $[PASSENGER_NAME],</p>
+        <p>¡Tu reserva de vuelo ha sido creada con éxito!</p>
+        <h3>Detalles de la reserva:</h3>
+        <table>
+            <tr>
+                <th>Id de la Reserva:</th>
+                <td>$[RESERVATION_ID]</td>
+            </tr>
+            <tr>
+                <th>Fecha Salida:</th>
+                <td>$[DEPARTURE_TIME]</td>
+            </tr>
+            <tr>
+                <th>Origen:</th>
+                <td>$[ORIGIN]</td>
+            </tr>
+            <tr>
+                <th>Destino:</th>
+                <td>$[DESTINATION]</td>
+            </tr>
+            <tr>
+                <th>Número de asiento:</th>
+                <td>$[SEAT_NUMBER]</td>
+            </tr>
+        </table>
+        <p>Gracias por eligir nuestra aerolínea. ¡Esperamos que tengas un excelente vuelo!</p>
+        <div class='footer'>
+            <p>Booking API</p>
+        </div>
+    </div>
+</body>
+
+</html>
