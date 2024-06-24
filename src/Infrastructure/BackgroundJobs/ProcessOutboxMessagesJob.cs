@@ -20,6 +20,7 @@ public class ProcessOutboxMessagesJob(
 		var messages = await _dbContext
 			.Set<OutboxMessage>()
 			.Where(x => !x.Processed)
+			.OrderBy(x => x.CreatedAt)
 			.Take(20)
 			.ToListAsync();
 

@@ -17,6 +17,7 @@ public class ProcessFlightsJob(
 				   flight.Status != FligthStatus.Cancelled
 				&& flight.Status != FligthStatus.Completed
 				&& flight.Status != FligthStatus.Delayed)
+			.OrderBy(flight => flight.DepartureTime)
 			.Take(20)
 			.ToListAsync(context.CancellationToken);
 
