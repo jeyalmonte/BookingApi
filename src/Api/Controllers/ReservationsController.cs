@@ -1,4 +1,5 @@
-﻿using Application.Reservations.Commands.CreateReservation;
+﻿using Application.Reservations.Commands.CancelReservation;
+using Application.Reservations.Commands.CreateReservation;
 using Application.Reservations.Queries.GetReservationById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -32,6 +33,18 @@ public class ReservationsController(ISender _sender) : ApiController
 		return result.Match(Ok, Problem);
 	}
 
+	[HttpDelete("{id:guid}")]
+	[ProducesResponseType(StatusCodes.Status204NoContent)]
+	[ProducesResponseType(StatusCodes.Status404NotFound)]
+	public async Task<IActionResult> CancelReservation(Guid id, CancellationToken cancellationToken)
+	{
+		var result = await _sender.Send(
+			new CancelReservationCommand(id),
+			cancellationToken);
 
+		return result.Match(
+			_ => NoContent(),
+			Problem);
+	}
 
 }
