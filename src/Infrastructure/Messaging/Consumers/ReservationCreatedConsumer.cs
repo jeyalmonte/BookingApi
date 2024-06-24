@@ -1,7 +1,7 @@
 ﻿using Application.Common.Helpers;
 using Application.Common.Interfaces;
-using Application.Reservations.Events;
 using Domain.Reservations;
+using Domain.Reservations.Events;
 using Infrastructure.Persistence.Context;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
@@ -12,10 +12,10 @@ namespace Infrastructure.Messaging.Consumers;
 public class ReservationCreatedConsumer(
 	AppDbContext _context,
 	IEmailService _emailService,
-	ILogger<ReservationCreatedEvent> _logger)
-	: IConsumer<ReservationCreatedEvent>
+	ILogger<ReservationCreatedConsumer> _logger)
+	: IConsumer<ReservationCreatedDomainEvent>
 {
-	public async Task Consume(ConsumeContext<ReservationCreatedEvent> context)
+	public async Task Consume(ConsumeContext<ReservationCreatedDomainEvent> context)
 	{
 		var reservation = await _context
 			.Set<Reservation>()

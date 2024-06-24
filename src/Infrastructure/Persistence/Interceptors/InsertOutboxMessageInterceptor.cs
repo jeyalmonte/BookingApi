@@ -21,6 +21,11 @@ public sealed class InsertOutboxMessageInterceptor : SaveChangesInterceptor
 		return base.SavingChangesAsync(eventData, result, cancellationToken);
 	}
 
+	/// <summary>
+	///  it uses the ChangeTracker to get the domain events from the entities
+	///   and then creates an OutboxMessage for each domain event.
+	/// </summary>
+	/// <param name="context"></param>
 	private static void InsertMessages(DbContext context)
 	{
 		var domainEvents = context
