@@ -1,6 +1,7 @@
 ﻿using Application.Reservations.Commands.CancelReservation;
 using Application.Reservations.Commands.CreateReservation;
 using Application.Reservations.Queries.GetReservationById;
+using Application.Reservations.Queries.GetReservationList;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +20,13 @@ public class ReservationsController(ISender _sender) : ApiController
 		return result.Match(
 			id => CreatedAtAction(nameof(GetById), new { id }, default),
 			Problem);
+	}
+	[HttpGet]
+	[ProducesResponseType(StatusCodes.Status200OK)]
+	public async Task<IActionResult> GetList([FromQuery] GetReservationListQuery query, CancellationToken cancellationToken)
+	{
+		var result = await _sender.Send(query, cancellationToken);
+		return Ok(result);
 	}
 
 	[HttpGet("{id:guid}")]
