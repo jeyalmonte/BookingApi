@@ -15,6 +15,9 @@ public class ReservationCreatedConsumer(
 	ILogger<ReservationCreatedConsumer> _logger)
 	: IConsumer<ReservationCreatedDomainEvent>
 {
+	private const string Template = "reservation-confirmation";
+	private const string Subject = "Reservation Confirmation";
+
 	public async Task Consume(ConsumeContext<ReservationCreatedDomainEvent> context)
 	{
 		var reservation = await _context
@@ -40,11 +43,11 @@ public class ReservationCreatedConsumer(
 			{ "SEAT_NUMBER", reservation.SeatNumber.ToString() }
 		};
 
-		var htmlContent = EmailHelper.GetTemplate("reservation-confirmation", properties);
+		var htmlContent = EmailHelper.GetTemplate(Template, properties);
 
 		var IsEmailSent = await _emailService.SendAsync(
 			to: reservation.BookerEmail,
-			subject: "Reservation Confirmation",
+			subject: Subject,
 			content: htmlContent,
 			cancellation: context.CancellationToken);
 

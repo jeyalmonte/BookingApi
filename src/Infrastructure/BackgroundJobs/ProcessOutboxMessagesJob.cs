@@ -22,7 +22,7 @@ public class ProcessOutboxMessagesJob(
 			.Where(x => !x.Processed)
 			.OrderBy(x => x.CreatedAt)
 			.Take(20)
-			.ToListAsync();
+			.ToListAsync(context.CancellationToken);
 
 		foreach (var message in messages)
 		{
