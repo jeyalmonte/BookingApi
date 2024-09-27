@@ -41,6 +41,9 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Server=postgres;Port=5432;Userid=postgres;Password=pass12345;SSLMode=Disable;Database=bookingdb
+      - RabbitMQ__HostName=rabbitmq  
+      - RabbitMQ__UserName=guest
+      - RabbitMQ__Password=guest
       - TZ=America/Santo_Domingo
     networks:
       - booking
